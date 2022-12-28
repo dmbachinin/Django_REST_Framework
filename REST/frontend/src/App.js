@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 
 import './App.css';
 import AuthorList from './components/Author.js'
@@ -11,28 +12,15 @@ class App extends React.Component{
         }
     }
     componentDidMount() {
-        const authors = [
-            {
-                'first_name': 'Dima',
-                'last_name': 'Balanchine',
-                'birthday': 2003
-            },
-            {
-                'first_name': 'Anna',
-                'last_name': 'Burkina',
-                'birthday': 2003
-            },
-            {
-                'first_name': 'Olga',
-                'last_name': 'Machina',
-                'birthday': 1996
-            },
-        ]
-        this.setState(
-            {
-                'authors': authors
+        axios.get('http://127.0.0.1:8000/api/authors').then(
+            response => {
+                this.setState(
+                    {
+                        'authors': response.data
+                    }
+                )
             }
-        )
+        ).catch(error => console.log(error))
     }
     render() {
     console.log(this.state.authors)
