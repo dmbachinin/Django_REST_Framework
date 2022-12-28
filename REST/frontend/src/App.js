@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.css';
+import AuthorList from './components/Author.js'
+
+class App extends React.Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            'authors': []
+        }
+    }
+    componentDidMount() {
+        const authors = [
+            {
+                'first_name': 'Dima',
+                'last_name': 'Balanchine',
+                'birthday': 2003
+            },
+            {
+                'first_name': 'Anna',
+                'last_name': 'Burkina',
+                'birthday': 2003
+            },
+            {
+                'first_name': 'Olga',
+                'last_name': 'Machina',
+                'birthday': 1996
+            },
+        ]
+        this.setState(
+            {
+                'authors': authors
+            }
+        )
+    }
+    render() {
+    console.log(this.state.authors)
+        return (
+        <div>
+            <AuthorList authors={this.state.authors}/>
+        </div>
+        )
+    }
 }
 
 export default App;
