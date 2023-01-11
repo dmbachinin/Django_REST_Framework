@@ -18,11 +18,14 @@ from django.urls import path, include
 from django.views.generic import RedirectView
 from rest_framework.routers import DefaultRouter
 
-import authors.views
+from authors.views import AuthorModelViewSet, BiographyModelViewSet, BookModelViewSet, ArticleModelViewSet
 
 
 router = DefaultRouter()
-router.register('authors', authors.views.AuthorModelViewSet)
+router.register('authors', AuthorModelViewSet)
+router.register('biography', BiographyModelViewSet)
+router.register('books', BookModelViewSet)
+router.register('articles', ArticleModelViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
