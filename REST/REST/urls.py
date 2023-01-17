@@ -18,18 +18,19 @@ from django.urls import path, include
 from django.views.generic import RedirectView
 from rest_framework.routers import DefaultRouter
 
-from authors.views import AuthorModelViewSet, BiographyModelViewSet, BookModelViewSet, ArticleModelViewSet
-
+from authors.views import AuthorModelViewSet, BiographyModelViewSet, BookModelViewSet, ArticleModelViewSet, MyApiView
 
 router = DefaultRouter()
 router.register('authors', AuthorModelViewSet)
 router.register('biography', BiographyModelViewSet)
 router.register('books', BookModelViewSet)
 router.register('articles', ArticleModelViewSet)
+router.register('my', MyApiView, basename='my')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', RedirectView.as_view(url="api/")),
     path('api-auth/', include('rest_framework.urls')),
-    path('api/', include(router.urls))
+    path('api/', include(router.urls)),
+    path('myapi/', MyApiView.as_view({'get': 'list'}))
 ]
