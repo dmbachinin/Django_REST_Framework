@@ -20,6 +20,8 @@ from rest_framework.routers import DefaultRouter
 
 from authors.views import AuthorModelViewSet, BiographyModelViewSet, BookModelViewSet, ArticleModelViewSet, MyApiView
 
+from rest_framework.authtoken.views import obtain_auth_token
+
 router = DefaultRouter()
 router.register('authors', AuthorModelViewSet)
 router.register('biography', BiographyModelViewSet)
@@ -31,6 +33,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', RedirectView.as_view(url="api/")),
     path('api-auth/', include('rest_framework.urls')),
+    path('api-token-auth/', obtain_auth_token),
     path('api/', include(router.urls)),
     path('myapi/', MyApiView.as_view({'get': 'list'}))
 ]

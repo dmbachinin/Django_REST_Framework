@@ -18,4 +18,4 @@ class Book(models.Model):
 
 class Article(models.Model):
     text = models.TextField()
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    author = models.ManyToManyField(Author)

@@ -1,4 +1,5 @@
 from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet, ViewSet
 from .models import Author, Biography, Book, Article
 from .serializers import AuthorModelSerializer, BiographyModelSerializer, BookModelSerializer, ArticleModelSerializer
@@ -18,7 +19,6 @@ class AuthorModelViewSet(ModelViewSet):
     queryset = Author.objects.all()
     serializer_class = AuthorModelSerializer
 
-    filterset_fields = ["first_name", "last_name"]
     pagination_class = AuthorPaginator
 
 
@@ -28,6 +28,7 @@ class BiographyModelViewSet(ModelViewSet):
 
 
 class BookModelViewSet(ModelViewSet):
+    permission_classes = [AllowAny]
     queryset = Book.objects.all()
     serializer_class = BookModelSerializer
 
