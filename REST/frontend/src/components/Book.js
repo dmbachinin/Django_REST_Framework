@@ -4,13 +4,10 @@ const BookItem = ({item}) => {
 return(
     <tr>
         <td>
-            {item.id}
-        </td>
-        <td>
             {item.name}
         </td>
         <td>
-            {item.author.first_name}
+            {item.author[0].first_name}
         </td>
     </tr>
 )}
@@ -20,9 +17,6 @@ const BookList = ({items}) => {
         <table>
             <thead>
                 <tr>
-                    <th>
-                        Id
-                    </th>
                     <th>
                         Name
                     </th>
