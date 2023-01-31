@@ -49,3 +49,5 @@ serializer = EXSerialazer(author, data=new_data, partial=True)
 serializer.is_valid()
 serializer.save()
 print(author.first_name, author.old)
+
+
