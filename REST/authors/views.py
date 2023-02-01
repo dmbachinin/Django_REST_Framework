@@ -43,8 +43,9 @@ class MyApiView(ViewSet):
 
     # get
     def list(self, request):
+        print(request.version)
         authors = Author.objects.all()
-        serializer = AuthorModelSerializer(authors, many=True)
+        serializer = AuthorModelSerializer(authors, many=True, context={'request': None})
         return Response(serializer.data)
 
     @action(detail=False, methods=['get'])
