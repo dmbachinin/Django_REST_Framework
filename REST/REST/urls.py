@@ -14,13 +14,29 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.views.generic import RedirectView
+from rest_framework import permissions
 from rest_framework.routers import DefaultRouter
 
 from authors.views import AuthorModelViewSet, BiographyModelViewSet, BookModelViewSet, ArticleModelViewSet, MyApiView
 
 from rest_framework.authtoken.views import obtain_auth_token
+
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="REST",
+        default_version="0.1",
+        description="Приложение для изучения DRF",
+        contact=openapi.Contact(email='baba@baba.ba'),
+        license=openapi.License(name="MIT License")
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny]
+)
 
 router = DefaultRouter()
 router.register('authors', AuthorModelViewSet)
@@ -35,5 +51,16 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('api-token-auth/', obtain_auth_token),
     path('api/', include(router.urls)),
-    path('myapi/', MyApiView.as_view({'get': 'list'}))
+
+    # Документация
+    re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('swagger/',schema_view.with_ui('swagger',cache_timeout=0),name='schema-swagger-ui'),
+    path('redoc/',schema_view.with_ui('redoc',cache_timeout=0),name='schema-redoc')
+    # Документация
+
+    # re_path(r'^myapi/(?P<version>\d)/authors/$', MyApiView.as_view({'get': 'list'})),
+    # path('version/1/authors', include('authors.urls', namespace='1')),
+    # path('version/2/authors', include('authors.urls', namespace='2')),
+    # path('api/authors', MyApiView.as_view({'get': 'list'}))
+
 ]
